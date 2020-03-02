@@ -1,0 +1,21 @@
+{
+  "name": "com.pangaeavr.entities",
+  "author": "Richard Huo",
+  "displayName": "PFrame Entities",
+  "version": "0.0.1-preview.1",
+  "unity": "2019.3",
+  "unityRelease": "0f1",
+  "description": "PFrame Entities package provides a modern Entity Component System (ECS) implementation with a basic set of systems and components made for Unity.",
+  "keywords": [
+    "unity",
+    "ecs",
+    "framework",
+  ],
+  "dependencies": {
+    "com.unity.entities": "0.5.1-preview.11"
+  },
+	"repository": {
+	"type": "git",
+	"url": "https://github.com/pangaeahuo/PFrameEntities.git"
+    }  
+}
