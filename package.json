@@ -9,7 +9,7 @@
   "keywords": [
     "unity",
     "ecs",
-    "framework",
+    "framework"
   ],
   "dependencies": {
     "com.unity.entities": "0.5.1-preview.11"
