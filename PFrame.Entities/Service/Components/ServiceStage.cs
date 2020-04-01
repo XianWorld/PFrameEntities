@@ -6,7 +6,7 @@ namespace PFrame.Entities
     public struct ServiceStage : IComponentData
     {
         //public NativeString32 Id;
-        public int Id;
+        public byte Id;
         public Entity ServiceEntity;
     }
 }

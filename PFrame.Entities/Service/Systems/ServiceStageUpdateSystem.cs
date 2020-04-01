@@ -12,14 +12,16 @@ namespace PFrame.Entities
             Entities.ForEach((Entity entity, ref ServiceStage stageComp, ref LoadCmd loadCmdComp) =>
             {
                 //LogUtil.Log($"{GetType().Name}: Load {stageComp.Id}");
-                CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                //CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                EntityUtil.SetState<LoadState, EnterLoadStateEvent, NoneState, ExitNoneStateEvent>(EntityManager, entity);
                 EntityManager.RemoveComponent<LoadCmd>(entity);
             });
 
             Entities.ForEach((Entity entity, ref ServiceStage stageComp, ref UnloadCmd unloadCmdComp) =>
             {
                 //LogUtil.Log($"{GetType().Name}: Unload {stageComp.Id}");
-                CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
+                //CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
+                EntityUtil.SetState<UnloadState, EnterUnloadStateEvent, LoadedState, ExitLoadedStateEvent>(EntityManager, entity);
                 EntityManager.RemoveComponent<UnloadCmd>(entity);
             });
         }

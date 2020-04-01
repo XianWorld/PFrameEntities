@@ -1,11 +1,9 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using Unity.Entities;
+﻿using Unity.Entities;
 
-//namespace PFrame.Entities
-//{
-//    public struct GameDataManager : IComponentData
-//    {
+namespace PFrame.Entities
+{
+    public struct GameDataManager : IComponentData
+    {
 
-//    }
-//}
+    }
+}

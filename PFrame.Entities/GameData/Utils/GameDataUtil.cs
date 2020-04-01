@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
@@ -7,6 +8,11 @@ namespace PFrame.Entities
 {
     public class GameDataUtil
     {
+        //public static ushort GetGameDataTypeId(Type enumType, string typeName)
+        //{
+        //    return (ushort)Enum.Parse(enumType, typeName);
+        //}
+
         public static string GetDataIdsString<T>(IEnumerable<T> datas, char seperateChar = ' ')
             where T : IGameData
         {

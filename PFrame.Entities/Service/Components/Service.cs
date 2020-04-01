@@ -6,20 +6,20 @@ namespace PFrame.Entities
     public struct Service : IComponentData
     {
         //public NativeString32 Id;
-        public int Id;
+        public byte Id;
 
         //public NativeString32 StageId;
-        public int StageId;
+        public byte StageId;
         public Entity StageEntity;
 
         //public NativeString32 NextStageId;
-        public int NextStageId;
+        public byte NextStageId;
     }
 
     public struct LoadStageCmd : IComponentData
     {
         //public NativeString32 StageId;
-        public int StageId;
+        public byte StageId;
     }
 
     public struct UnloadStageCmd : IComponentData

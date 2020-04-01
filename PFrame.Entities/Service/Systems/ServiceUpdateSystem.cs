@@ -20,7 +20,8 @@ namespace PFrame.Entities
                 if (stageEntity != Entity.Null)
                 {
                     EntityManager.AddComponent<UnloadCmd>(stageEntity);
-                    CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
+                    EntityUtil.SetState<UnloadState, EnterUnloadStateEvent, LoadedState, ExitLoadedStateEvent>(EntityManager, entity);
+                    //CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
                 }
 
                 EntityManager.RemoveComponent<UnloadStageCmd>(entity);
@@ -45,7 +46,8 @@ namespace PFrame.Entities
 
                     EntityManager.AddComponent<UnloadCmd>(stageEntity);
 
-                    CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
+                    EntityUtil.SetState<UnloadState, EnterUnloadStateEvent, LoadedState, ExitLoadedStateEvent>(EntityManager, entity);
+                    //CommonUtil.SetState<UnloadState, UnloadEvent, LoadedState>(World, entity);
                 }
                 else
                 {
@@ -53,7 +55,8 @@ namespace PFrame.Entities
 
                     //EntityManager.AddComponent<LoadCmdComponent>(stageEntity);
                     serviceComp.StageId = newStageId;
-                    CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                    //CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                    EntityUtil.SetState<LoadState, EnterLoadStateEvent, NoneState, ExitNoneStateEvent>(EntityManager, entity);
                 }
 
                 EntityManager.RemoveComponent<LoadStageCmd>(entity);
@@ -64,9 +67,10 @@ namespace PFrame.Entities
                 var stageId = serviceComp.StageId;
                 var stageEntity = serviceComp.StageEntity;
 
-                if (EntityManager.HasComponent<LoadedEvent>(stageEntity))
+                if (EntityManager.HasComponent<EnterLoadedStateEvent>(stageEntity))
                 {
-                    CommonUtil.SetState<LoadedState, LoadedEvent, LoadState>(World, entity);
+                    EntityUtil.SetState<LoadedState, EnterLoadedStateEvent, LoadState, ExitLoadStateEvent>(EntityManager, entity);
+                    //CommonUtil.SetState<LoadedState, LoadedEvent, LoadState>(World, entity);
                 }
             });
 
@@ -75,24 +79,46 @@ namespace PFrame.Entities
                 var stageId = serviceComp.StageId;
                 var stageEntity = serviceComp.StageEntity;
 
-                if (EntityManager.HasComponent<UnloadedEvent>(stageEntity))
+                if (EntityManager.HasComponent<EnterUnloadedStateEvent>(stageEntity))
                 {
-                    CommonUtil.SetState<NoneState, UnloadedEvent, UnloadState>(World, entity);
+                    EntityUtil.SetState<UnloadedState, EnterUnloadedStateEvent, UnloadState, ExitUnloadStateEvent>(EntityManager, entity);
+                    //CommonUtil.SetState<NoneState, UnloadedEvent, UnloadState>(World, entity);
 
                     serviceComp.StageId = 0;// "";
                     serviceComp.StageEntity = Entity.Null;
 
-                    var newStageId = serviceComp.NextStageId;
-                    if (newStageId != 0)
-                    {
-                        //stageEntity = CreateStageEntity(entity, comp1, newStageId, newStageBP, newStageBPData);
+                    //var newStageId = serviceComp.NextStageId;
+                    //if (newStageId != 0)
+                    //{
+                    //    //stageEntity = CreateStageEntity(entity, comp1, newStageId, newStageBP, newStageBPData);
 
-                        //EntityManager.AddComponent<LoadCmdComponent>(stageEntity);
-                        serviceComp.StageId = newStageId;
-                        CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                    //    //EntityManager.AddComponent<LoadCmdComponent>(stageEntity);
+                    //    serviceComp.StageId = newStageId;
+                    //    //CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                    //    EntityUtil.SetState<LoadState, EnterLoadStateEvent, NoneState>(EntityManager, entity);
 
-                        serviceComp.NextStageId = 0;// CommonUtil.EmptyString32;
-                    }
+                    //    serviceComp.NextStageId = 0;// CommonUtil.EmptyString32;
+                    //}
+                }
+            });
+
+            Entities.ForEach((Entity entity, ref Service serviceComp, ref UnloadedState unloadedStateComp) =>
+            {
+                var stageId = serviceComp.StageId;
+                var stageEntity = serviceComp.StageEntity;
+
+                var newStageId = serviceComp.NextStageId;
+                if (newStageId != 0)
+                {
+                    serviceComp.StageId = newStageId;
+                    //CommonUtil.SetState<LoadState, LoadEvent, NoneState>(World, entity);
+                    EntityUtil.SetState<LoadState, EnterLoadStateEvent, UnloadedState, ExitUnloadedStateEvent>(EntityManager, entity);
+
+                    serviceComp.NextStageId = 0;// CommonUtil.EmptyString32;
+                }
+                else
+                {
+                    EntityUtil.SetState<NoneState, EnterNoneStateEvent, UnloadedState, ExitUnloadedStateEvent>(EntityManager, entity);
                 }
             });
         }
